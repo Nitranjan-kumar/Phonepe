@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phonepe</title>
+</head>
+
+<body>
+    <div id="success" style="display: none;">
+        <h2>Payment Successful</h2>
+    </div>
+    <div id="failure" style="display: none;">
+        <h2>Failed</h2>
+    </div>
+    <div id="process" style="display: none;">
+        <h2>Processing Payment</h2>
+    </div>
+    <button onclick="processPayment()">Payment</button>
+    <script>
+        function simulatePaymentProcess() {
+            return new Promise((resolve, reject) => {
+                const isSuccess = Math.random() < 0.8; 
+
+                setTimeout(() => {
+                    if (isSuccess) {
+                        resolve();
+                    } else {
+                        reject();
+                    }
+                }, 2000); 
+            });
+        }
+
+        function successUI() {
+            document.getElementById("success").style.display = 'block';
+        }
+
+        function failUI() {
+            document.getElementById("failure").style.display = 'block';
+        }
+
+        function processUI() {
+            document.getElementById("process").style.display = 'block';
+        }
+
+        function hideAllUI() {
+            document.getElementById("success").style.display = 'none';
+            document.getElementById("failure").style.display = 'none';
+            document.getElementById("process").style.display = 'none';
+        }
+
+        function processPayment() {
+            hideAllUI();
+            processUI();
+
+            simulatePaymentProcess()
+                .then(() => {
+                    hideAllUI();
+                    successUI();
+                })
+                .catch(() => {
+                    hideAllUI();
+                    failUI();
+                });
+        }
+    </script>
+</body>
+
+</html>
